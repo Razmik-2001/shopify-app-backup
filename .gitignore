@@ -1,0 +1,14 @@
+#Node modules
+node_modules
+client/node_modules
+server/node_modules
+
+#Env files
+client/.env
+server/.env
+
+#Build folders
+client/build
+
+#Editor configs
+.idea
