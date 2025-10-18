@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import "@shopify/polaris/build/esm/styles.css";
-import {
-    AppProvider,
-    Button,
-    Form,
-    FormLayout,
-    TextField,
-    Card,
-    Banner,
-} from "@shopify/polaris";
 import { useDispatch } from "react-redux";
-import { createBanner , getBanners} from "../../../app/banner/bannerThunk";
+import { createBanner, getBanners } from "../../../app/banner/bannerThunk";
+import "./BannerForm.css"; // 👈 սովորական CSS
 
 function BannerForm() {
     const dispatch = useDispatch();
@@ -40,62 +31,56 @@ function BannerForm() {
             setSuccess(true);
         } catch (err) {
             console.error("Failed to create banner:", err);
-            setError(err || "Something went wrong!");
+            setError(err?.message || "Something went wrong!");
         }
     };
 
     return (
-        <AppProvider i18n={{}}>
-            <div style={{ width: "500px", margin: "50px auto" }}>
-                <Card sectioned>
-                    {success && (
-                        <Banner
-                            title="Banner added successfully!"
-                            status="success"
-                            onDismiss={() => setSuccess(false)}
+        <div className="banner-container">
+            <h2 className="banner-title">Create Banner</h2>
+
+            {success && <div className="banner-message success">Banner added successfully!</div>}
+            {error && <div className="banner-message error">{error}</div>}
+
+            <form onSubmit={handleSubmit} className="banner-form">
+                <div className="form-group">
+                    <label>Banner Text</label>
+                    <input
+                        type="text"
+                        value={formData.bannerText}
+                        onChange={(e) => handleChange("bannerText", e.target.value)}
+                        placeholder="Enter banner text"
+                        required
+                    />
+                </div>
+
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Start Date</label>
+                        <input
+                            type="date"
+                            value={formData.startDate}
+                            onChange={(e) => handleChange("startDate", e.target.value)}
+                            required
                         />
-                    )}
-                    {error && (
-                        <Banner
-                            title="Error adding banner"
-                            status="critical"
-                            onDismiss={() => setError(null)}
-                        >
-                            <p>{error}</p>
-                        </Banner>
-                    )}
+                    </div>
 
-                    <Form onSubmit={handleSubmit}>
-                        <FormLayout>
-                            <TextField
-                                label="Banner Text"
-                                value={formData.bannerText}
-                                onChange={(val) => handleChange("bannerText", val)}
-                            />
+                    <div className="form-group">
+                        <label>End Date</label>
+                        <input
+                            type="date"
+                            value={formData.endDate}
+                            onChange={(e) => handleChange("endDate", e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
 
-                            <FormLayout.Group>
-                                <TextField
-                                    type="date"
-                                    label="Start Date"
-                                    value={formData.startDate}
-                                    onChange={(val) => handleChange("startDate", val)}
-                                />
-                                <TextField
-                                    type="date"
-                                    label="End Date"
-                                    value={formData.endDate}
-                                    onChange={(val) => handleChange("endDate", val)}
-                                />
-                            </FormLayout.Group>
-
-                            <Button submit primary>
-                                Save Banner
-                            </Button>
-                        </FormLayout>
-                    </Form>
-                </Card>
-            </div>
-        </AppProvider>
+                <button type="submit" className="banner-button">
+                    Save Banner
+                </button>
+            </form>
+        </div>
     );
 }
 

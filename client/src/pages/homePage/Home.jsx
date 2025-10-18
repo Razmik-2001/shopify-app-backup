@@ -1,23 +1,46 @@
-import React, {useEffect} from "react";
-import {useSelector} from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import "./Home.css";
+import BannerForm from "../../components/UI/bannerForm/BannerForm";
 
 export default function Home() {
-    const {shop} = useSelector((state) => state.shop);
+    const { shop } = useSelector((state) => state.shop);
+    const [shopDomain, setShopDomain] = useState("");
+
     const handleInstall = () => {
-        const shop = prompt("Enter your Shopify store name (e.g. myshop.myshopify.com)");
-        if (!shop) return alert("Shop name is required!");
-        window.location.href = `https://kinley-subhemispheric-anibal.ngrok-free.dev/auth?shop=${shop}`;
+        const domain = shopDomain.trim() || shop?.trim();
+
+        if (!domain) {
+            return alert("Shop name is required!");
+        }
+
+        window.location.href = `https://kinley-subhemispheric-anibal.ngrok-free.dev/auth?shop=${domain}`;
     };
 
     useEffect(() => {
         console.log(shop);
-    })
+    }, [shop]);
+
     return (
-        <div>
-            <h1>Welcome to Home.jsx</h1>
-            <button onClick={handleInstall} primary>
-                Install App
-            </button>
+        <div className="home-page">
+            <div className="home-content">
+                <p className="subtitle">
+                    Please enter your Shopify domain to install the application.
+                </p>
+                <div className="form-group">
+                    <input
+                        id="shopify-domain"
+                        type="text"
+                        placeholder="my-store-name.myshopify.com"
+                        className="input-field"
+                        value={shopDomain}
+                        onChange={(e) => setShopDomain(e.target.value)}
+                    />
+                </div>
+                <button className="install-button" onClick={handleInstall}>
+                    Install App
+                </button>
+            </div>
         </div>
     );
 }
