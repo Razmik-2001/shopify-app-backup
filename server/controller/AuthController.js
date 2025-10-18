@@ -11,8 +11,6 @@ class AuthController{
 
         const redirectUri = `${process.env.FORWARDING_ADDRESS}/auth/callback`;
         const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${process.env.SHOPIFY_API_KEY}&scope=${process.env.SCOPES}&redirect_uri=${redirectUri}`;
-
-        console.log("Redirecting to Shopify install URL:", installUrl);
         res.redirect(installUrl);
     }
     static shopifyAuthCallback = async (req, res)  => {
