@@ -12,3 +12,6 @@ client/build
 
 #Editor configs
 .idea
+
+cd client && npm install && npm run build cd ../server && npm install
+cd server && node server.js
