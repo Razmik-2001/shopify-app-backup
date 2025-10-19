@@ -13,7 +13,7 @@ export default function Home() {
             return alert("Shop name is required!");
         }
 
-        window.location.href = `${process.env.REACT_APP_API_URL}/auth?shop=${domain}`;
+        window.location.href = `https://shopify-app-backup.onrender.com/auth?shop=${domain}`;
     };
 
     useEffect(() => {
