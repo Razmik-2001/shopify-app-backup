@@ -53,7 +53,6 @@ class AuthController{
             );
 
             res.redirect(`https://${shop}/admin/apps/${process.env.APP_NAME}/dashboard?shop=${shop}`);
-             // res.redirect(`http://localhost:3000/dashboard`);
         } catch (error) {
             console.error("Error getting access token:", error.response?.data || error.message);
             res.status(500).send("Failed to get access token");
