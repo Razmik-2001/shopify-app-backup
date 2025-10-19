@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./Home.css";
-import BannerForm from "../../components/UI/bannerForm/BannerForm";
 
 export default function Home() {
     const { shop } = useSelector((state) => state.shop);
@@ -14,7 +13,7 @@ export default function Home() {
             return alert("Shop name is required!");
         }
 
-        window.location.href = `https://kinley-subhemispheric-anibal.ngrok-free.dev/auth?shop=${domain}`;
+        window.location.href = `${process.env.REACT_APP_API_URL}/auth?shop=${domain}`;
     };
 
     useEffect(() => {
